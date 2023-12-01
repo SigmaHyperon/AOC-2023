@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"outDir": "dist",
+		"esModuleInterop": true,
+		"target": "ES2022",
+		"moduleResolution": "node",
+		"sourceMap": true
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"days",
+		"lib", 
+		"index.ts"	
+	],
+	"ts-node": {
+		"files": true
+	}
+}
