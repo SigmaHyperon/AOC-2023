@@ -10,6 +10,10 @@ export class Point2 {
 	toString() {
 		return `${this.x},${this.y}`;
 	}
+
+	isInRect(x1: number, y1: number, x2: number, y2: number): boolean {
+		return this.x >= Math.min(x1, x2) && this.x <= Math.max(x1, x2) && this.y >= Math.min(y1, y2) && this.y <= Math.max(y1, y2);
+	}
 }
 
 export class Point3 extends Point2 {

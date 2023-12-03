@@ -3,6 +3,7 @@ import Solver from "../../lib/solver";
 import "../../lib/prototypes";
 import { Matrix } from "../../lib/collections";
 import { range } from "../../lib/util";
+import { Point2 } from "../../lib/geometry";
 
 const values = Input.readFile().asMatrix("").asMatrix();
 
@@ -59,28 +60,20 @@ function part1(): number | string {
 	return partNumbers.map(v => v.value).sum();
 }
 
-type Point = {x: number, y: number};
-type GearValue = Point & {numbers: LocationValue[]}
+type GearValue = {point: Point2, numbers: LocationValue[]}
 
 function findGears(matrix: Matrix<string>): GearValue[] {
 	return matrix.values().filter(v => v.value === "*").map(v => {
+		const point = new Point2(v.x, v.y)
 		return {
-			x: v.x,
-			y: v.y,
-			numbers: partNumbers.filter(lv => lv.y + 1 >= v.y && lv.y - 1 <= v.y).filter(lv => isPointNearLocation({x: v.x, y: v.y}, lv, matrix))
+			point,
+			numbers: partNumbers.filter(lv => isPointNearLocation(point, lv, matrix))
 		};
 	}).filter(v => v.numbers.length === 2);
 }
 
-function isPointNearLocation(point: Point, location: Location, matrix: Matrix<string>): boolean {
-	const neighbours = matrix.neighbours(point.x, point.y, true);
-	const locationRange = range(location.x1, location.x2).map(v => {
-		return {
-			x: v,
-			y: location.y
-		}
-	});
-	return neighbours.some(n => locationRange.some(l => l.x === n.x && l.y === n.y));
+function isPointNearLocation(point: Point2, location: Location, matrix: Matrix<string>): boolean {
+	return point.isInRect(location.x1 - 1, location.y - 1, location.x2 + 1, location.y + 1);
 }
 
 function part2(): number | string {
