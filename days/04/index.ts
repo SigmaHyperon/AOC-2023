@@ -9,8 +9,6 @@ type Card = {
 	drawn: number[];
 }
 
-type CardStack = Card & {count: number};
-
 function parseLine(line: string): Card {
 	const [, id, winningPart, drawnPart] = line.match(/Card +(\d+)\: ([\d ]+)\| ([\d ]+)/);
 	return {
@@ -29,11 +27,10 @@ function part1(): number | string {
 }
 
 function part2(): number | string {
-	const stacks = values.map(v => { return {...v, count: 1} as CardStack });
-	for(const [i, stack] of Object.entries(stacks)) {
-		const index = Number(i);
+	const stacks = values.map(v => ({...v, count: 1}));
+	for(const [i, stack] of stacks.entries()) {
 		const matches = stack.winning.filter(v => stack.drawn.includes(v)).length;
-		for(const k of range(index + 1, index + matches)) {
+		for(const k of range(i + 1, i + matches)) {
 			stacks[k].count += stack.count;
 		}
 	}
