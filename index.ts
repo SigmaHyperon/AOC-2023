@@ -9,7 +9,8 @@ import { exec } from "child_process";
 yargs(hideBin(process.argv))
 .option("day", {
 	alias: "d",
-	type: "number"
+	type: "number",
+	default: new Date().getDate()
 })
 .command("*", false, () => {}, (args) => {
 	if(!(args instanceof Promise)) {
