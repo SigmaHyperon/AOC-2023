@@ -2,8 +2,8 @@ import { Input } from "../../lib/input";
 import Solver from "../../lib/solver";
 import "../../lib/prototypes";
 import { Matrix } from "../../lib/collections";
-import { range } from "../../lib/util";
 import { Point2 } from "../../lib/geometry";
+import { Integers } from "../../lib/numerics";
 
 const values = Input.readFile().asMatrix("").asMatrix();
 
@@ -35,11 +35,11 @@ function findNumbers(matrix: Matrix<string>): Location[] {
 }
 
 function isPartNumberLocation(location: Location, matrix: Matrix<string>) {
-	return range(location.x1, location.x2).flatMap(v => matrix.neighbours(v, location.y, true)).some(v => !"0123456789.".includes(v.value));
+	return Integers.range(location.x1, location.x2).flatMap(v => matrix.neighbours(v, location.y, true)).some(v => !"0123456789.".includes(v.value));
 }
 
 function getNumberAtLocation(location: Location, matrix: Matrix<string>): number {
-	return Number(range(location.x1, location.x2).map(v => matrix.valueAt(v, location.y)).join(""));
+	return Number(Integers.range(location.x1, location.x2).map(v => matrix.valueAt(v, location.y)).join(""));
 }
 
 function getLocationValue(location: Location, matrix: Matrix<string>): LocationValue {
