@@ -27,7 +27,7 @@ export default class Solver {
 
 			const solution = this.execute(this.part1);
 			console.log("part1:", solution.solution);
-			console.log("time:", solution.time);
+			console.log("time:", formatDuration(solution.time));
 		}
 		if(this.part2) {
 			if(this.part1) {
@@ -35,7 +35,7 @@ export default class Solver {
 			}
 			const solution = this.execute(this.part2);
 			console.log("part2:", solution.solution);
-			console.log("time:", solution.time);
+			console.log("time:", formatDuration(solution.time));
 		}
 	}
 
@@ -49,3 +49,20 @@ export default class Solver {
 		}
 	}
 }
+
+function formatDuration(time: number): string {
+	if (time < 0) time = -time;
+	const t = {
+	  day: Math.floor(time / 86400000),
+	  hour: Math.floor(time / 3600000) % 24,
+	  minute: Math.floor(time / 60000) % 60,
+	  second: Math.floor(time / 1000) % 60,
+	  millisecond: Math.floor(time) % 1000,
+	  microsecond: Math.floor((time % 1) * 1000),
+	  nanosecond: Math.floor((time * 1000000) % 1000)
+	};
+	return Object.entries(t)
+	  .filter(val => val[1] !== 0)
+	  .map(([key, val]) => `${val} ${key}${val !== 1 ? 's' : ''}`)
+	  .join(', ');
+};
