@@ -31,12 +31,15 @@ export default class Solver {
 		}
 		if(this.part2) {
 			if(this.part1) {
-				console.log();
+				console.log("");
 			}
 			const solution = this.execute(this.part2);
 			console.log("part2:", solution.solution);
 			console.log("time:", formatDuration(solution.time));
 		}
+
+		console.log("");
+		console.log("total:", formatDuration(process.uptime()* 1000));
 	}
 
 	protected execute(func: () => string | number): { solution: string, time: number } {
