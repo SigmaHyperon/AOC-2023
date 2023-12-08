@@ -62,4 +62,22 @@ export class Integers {
 			return this.range(a, b).reverse();
 		}
 	}
+
+	static gcd(a: number, b: number): number {
+		return b === 0 ? a : this.gcd(b, a % b);
+	}
+
+	static lcm(...a: number[]): number {
+		if(a.length > 2) {
+		  let result = a[0];
+		
+		  for (let i = 1; i < a.length; i++) {
+				result = this.lcm(result, a[i]);
+		  }
+		
+		  return result;
+		} else {
+			return (a[0] * a[1]) / this.gcd(a[0], a[1]);
+		}
+	}
 }
