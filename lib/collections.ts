@@ -46,6 +46,10 @@ export class Lists {
 		}
 		return res;
 	}
+
+	static zip<T, K>(a: T[], b: K[]):[T, K][] {
+		return a.map((k, i) => [k, b[i]]);
+	}
 }
 
 export class Sets {
